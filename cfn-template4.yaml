@@ -16,22 +16,36 @@ Resources:
       SecurityGroups:
         - !Ref WebServerSecurityGroup
       KeyName: !Ref KeyName
-      UserData:
-        Fn::Base64: 
-          |
-            #! /bin/bash
-            yum update -y
-            yum install httpd -y
-            sudo yum install python3
-            sudo yum install python3-flask
-            cd /var/www/html
-            FOLDER="https://raw.githubusercontent.com/kasimecer/aws-cloud_formation-flask-roman_numerals/main/"
-            wget ${FOLDER}templates/index.html
-            wget ${FOLDER}templates/result.html
-            wget ${FOLDER}Project_001_.png
-            wget ${FOLDER}project-001-snapshot.png
-            systemctl start httpd
-            systemctl enable httpd
+      UserData: !Base64 |
+          #! /bin/bash
+          yum update -y
+          sudo yum install python3 -y
+          sudo yum install python3-flask
+          cd /var/www/html
+          FOLDER="https://raw.githubusercontent.com/kasimecer/aws-cloud_formation-flask-roman_numerals/main/"
+          wget ${FOLDER}templates/index.html
+          wget ${FOLDER}templates/result.html
+          wget ${FOLDER}Project_001_.png
+          wget ${FOLDER}project-001-snapshot.png
+          wget ${FOLDER}/app.py
+          systemctl start httpd
+          systemctl enable httpd
+          cd ..
+          python3 app.py
+      
+            
+          
+          # pip3 install flask
+          # cd /home/ec2-user
+          # FOLDER="https://raw.githubusercontent.com/serdarcw/my-repository/master/Project-001-Roman-Numerals-Converter"
+          # wget ${FOLDER}/app.py
+          # mkdir templates && cd templates
+          # wget ${FOLDER}/templates/index.html
+          # wget ${FOLDER}/templates/result.html
+          # cd ..
+          # python3 app.py
+
+
       
   WebServerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -39,16 +53,16 @@ Resources:
       GroupDescription: Enable HTTP access on port 80
       SecurityGroupIngress:
         - IpProtocol: tcp
-          FromPort: '80'
-          ToPort: '80'
+          FromPort: 80
+          ToPort: 80
           CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
-          FromPort: '22'
-          ToPort: '22'
+          FromPort: 22
+          ToPort: 22
           CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
-          FromPort: '8080'
-          ToPort: '8080'
+          FromPort: 8080
+          ToPort: 8080
           CidrIp: 0.0.0.0/0
 
 Outputs:
