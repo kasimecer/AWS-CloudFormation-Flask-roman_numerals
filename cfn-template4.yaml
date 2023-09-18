@@ -20,13 +20,13 @@ Resources:
           #! /bin/bash
           yum update -y
           sudo yum install python3 -y
-          sudo yum install python3-flask
+          pip3 install flask
           cd /var/www/html
-          FOLDER="https://raw.githubusercontent.com/kasimecer/aws-cloud_formation-flask-roman_numerals/main/"
-          wget ${FOLDER}templates/index.html
-          wget ${FOLDER}templates/result.html
-          wget ${FOLDER}Project_001_.png
-          wget ${FOLDER}project-001-snapshot.png
+          FOLDER="https://raw.githubusercontent.com/kasimecer/aws-cloud_formation-flask-roman_numerals/main"
+          wget ${FOLDER}/templates/index.html
+          wget ${FOLDER}/templates/result.html
+          wget ${FOLDER}/Project_001_.png
+          wget ${FOLDER}/project-001-snapshot.png
           wget ${FOLDER}/app.py
           systemctl start httpd
           systemctl enable httpd
