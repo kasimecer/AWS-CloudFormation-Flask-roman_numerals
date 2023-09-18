@@ -32,28 +32,19 @@ def converter(num):
     return "".join([a for a in roman_num(num)])
 
 
-
-
-
-# Create a function named `index` which uses template file named `index.html` 
-# send a number as template variable to the app.py and assign route of no path ('/') 
-@app.route("/")
-def index():
-    return render_template("index.html", methods=["GET"])
-
-
-# convert using "convert" function, then sent the result to the 
-# "result.hmtl" file and assign route of path ('/calc'). 
-# When the user comes directly "/calc" path, "Since this is a GET request, LCM has not been calculated" string returns to them with "result.html" file
-@app.route("/convert", methods=["GET", "POST"])
-def convert():
-    if request.method == "POST":
-        num = request.form.get("number")
-        return render_template("result.html", number_decimal = num, number_roman = converter(int(num))) # , developer_name = 'Kasim'
+@app.route('/', methods=['POST', 'GET'])
+def main_post():
+    if request.method == 'POST':
+        alpha = request.form['number']
+        if not alpha.isdecimal():
+            return render_template('index.html', developer_name='Kasim', not_valid=True)
+        number = int(alpha)
+        if not 0 < number < 4000:
+            return render_template('index.html', developer_name='Kasim', not_valid=True)
+        return render_template('result.html', number_decimal = number , number_roman= converter(number), developer_name='Serdar')
     else:
-        return render_template("result.html")  # , developer_name = "Kasim"
-
-
+        return render_template('index.html', developer_name='Kasim', not_valid=False)
+    
 
 if __name__ == '__main__':
    app.run(host='0.0.0.0', port=8080)
