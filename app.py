@@ -41,7 +41,7 @@ def main_post():
         number = int(alpha)
         if not 0 < number < 4000:
             return render_template('index.html', developer_name='Kasim', not_valid=True)
-        return render_template('result.html', number_decimal = number , number_roman= converter(number), developer_name='Serdar')
+        return render_template('result.html', number_decimal = number , number_roman= converter(number), developer_name='Kasim')
     else:
         return render_template('index.html', developer_name='Kasim', not_valid=False)
     
